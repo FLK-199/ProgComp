@@ -10,16 +10,19 @@ using namespace std;
 
 typedef long long ll;
 
-vi subs;
+vi subs, set1, set2;
 int n, tot = 0, sum = 0;
 bool flag  = false;
 
 void search(int k, int sum){
     if(k == n+1 || sum == tot/2){
-        cout << "YES" << endl;
         
-        
-
+        if(sum == tot/2 && !flag){
+            flag = true;
+            f0r(subs.size()){
+                set1.push_back(subs[i]);
+            }
+        }
     }
     else{
         subs.push_back(k);
@@ -38,8 +41,18 @@ int main() {
 
     search(1, sum);
 
-    if(flag)
+    if(flag){
         cout << "YES" << endl;
+        
+        cout << set1.size() << endl;
+        f0r(set1.size()) cout << set1[i] << " ";
+        cout << endl;
+
+
+        cout << set2.size() << endl;
+        f0r(set2.size()) cout << set2[i] << " ";
+        cout << endl;
+    }
     else 
         cout << "NO" << endl;
 
