@@ -23,25 +23,30 @@ int main(){
     //(saida, quarto, indice)
     priority_queue<tiii, vector<tiii>, greater<tiii>> pq;
 
-    int q = 0;
+    int q = 0, maior = 0;
 
     for(auto i: pessoas){
         if(!pq.empty())
             if(get<0>(i) > get<0>(pq.top())){
                 ans[get<2>(i)] = get<1>(pq.top());
+                pq.push({get<1>(i), get<1>(pq.top()), get<2>(i)});
                 pq.pop();
-                pq.push({get<1>(i), q, get<2>(i)});
             }
             else{
-                ans[get<2>(i)] = get<1>(pq.top());
                 q++;
+                ans[get<2>(i)] = q;
                 pq.push({get<1>(i), q, get<2>(i)});
             }
         else{
             q++;
+            ans[get<2>(i)] = q;
             pq.push({get<1>(i), q, get<2>(i)});
         }
+
+        maior = max(maior, (int) pq.size());
     }
+
+    cout << maior << endl;
 
     for(auto i: ans)
         cout << i << " ";

@@ -8,20 +8,39 @@ using namespace std;
 #define vi vector<int>
 #define vll vector<ll>
 #define pii pair<int,int>
+#define tiii tuple<int,int,int>
 
 typedef long long ll;
 
 int main() {
-    int n, x; cin >> x >> n;
+    int x, n; cin >> x >> n;
 
-    vi dist(n, 0), postes(x);
+    set<int> s;
 
-    dist[n-1] = n;
+    s.insert(0);
+    s.insert(x);
 
-    f0r(x){
-        int p; cin >> p;
+    tiii tup = {-2, -2, -2};
 
-        postes.push_back(p);
+    while(n--){
+        int trafico; cin >> trafico;
+        s.insert(trafico);
+
+        int td = abs(trafico - *s.upper_bound(trafico)),
+            te = abs(*s.lower_bound(trafico) - trafico);
+        
+        int tam = max(td, te);
+
+        if(!(get<0>(tup) == -2)){
+            if(trafico > get<1>(tup))
+                tam = max(tam, get<0>(tup));
+            else    
+                tam = max(tam, get<2>(tup));
+        }
+        
+        tup = {te, trafico, td};
+
+        cout << tam << endl;
     }
 
     return 0;
