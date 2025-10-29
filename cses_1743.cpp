@@ -13,14 +13,20 @@ typedef long long ll;
 int main() {
     ios::sync_with_stdio(0); cin.tie(0);
 
-    string str; cin >> str;
+    string str, ans = ""; cin >> str;
     srt(str);
+    stack<char> pilha;
 
     f0r(str.size()){
-        char p, s;
+        if(ans[ans.size()-1] != str[i])
+            ans += str[i];  
+        else    
+            pilha.push(str[i]);        
+    }
+
+    cout << ans << endl;
 
     
-    }
 
     return 0;
 }

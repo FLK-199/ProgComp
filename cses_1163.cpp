@@ -8,40 +8,49 @@ using namespace std;
 #define vi vector<int>
 #define vll vector<ll>
 #define pii pair<int,int>
-#define tiii tuple<int,int,int>
 
 typedef long long ll;
 
 int main() {
-    int x, n; cin >> x >> n;
+    ll x, n; cin >> x >> n;
 
-    set<int> s;
+    set<ll> s;
 
     s.insert(0);
     s.insert(x);
 
-    tiii tup = {-2, -2, -2};
+    int iterva = 1;
+
+    pair<ll, ll> mint = {0, x};
 
     while(n--){
-        int trafico; cin >> trafico;
+        ll trafico; cin >> trafico;
+
         s.insert(trafico);
-
-        int td = abs(trafico - *s.upper_bound(trafico)),
-            te = abs(*s.lower_bound(trafico) - trafico);
         
-        int tam = max(td, te);
-
-        if(!(get<0>(tup) == -2)){
-            if(trafico > get<1>(tup))
-                tam = max(tam, get<0>(tup));
-            else    
-                tam = max(tam, get<2>(tup));
+        if(trafico == mint.first + 1 && iterva == 1){
+            mint.first++;
+            cout << mint.second - mint.first << " ";
         }
-        
-        tup = {te, trafico, td};
+        else if(trafico > mint.first && trafico < mint.second){
+            ll aux = 0, ans = 0;
+            for(auto &i: s)
+                if(!(i == 0)){
+                    if(i-aux > ans){
+                        ans = i-aux;
+                        mint = {aux, i};
+                    }
 
-        cout << tam << endl;
+                    aux = i;
+                    iterva++;
+                }
+            cout << ans << " ";
+        }
+        else    
+            cout << mint.second - mint.first << " ";
     }
+
+    cout << endl;
 
     return 0;
 }
