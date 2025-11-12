@@ -10,27 +10,62 @@ using namespace std;
 #define pii pair<int,int>
 
 typedef long long ll;
-vector<vi> vec;
-vi dist;
-queue q;
+vector<vi> grafo;
+vi ant, visitado;
 
+void bfs(){
+    queue<int> q;
+    q.push(1);
+    ant[1] = 1;
+    visitado[1] = 1;
 
-int bfs(){
+    while(!q.empty()){
+        int atual = q.front(); q.pop();
 
+        for(auto v: grafo[atual]){
+            if(!visitado[v]){
+                visitado[v] = 1;
+                q.push(v);
+                ant[v] = atual;
+            }
+        }
+    }
 }
 
 int main() {
     int n, m; cin >> n >> m;
 
-    vec.resize(n+1);
-    dist.resize(n+1, -1);
+    grafo.resize(n+1);
+    ant.resize(n+1);
+    visitado.resize(n+1, 0);
 
     while(m--){
         int a, b; cin >> a >> b;
-        vec[a].push_back(b); vec[b].push_back(a);
+        grafo[a].push_back(b); grafo[b].push_back(a);
     }
 
-    cout << bfs() << endl;
+    bfs();
+
+    if(!visitado[n])
+        cout << "IMPOSSIBLE" << endl;
+    else{
+        stack<int> p; p.push(n);
+        int aux = ant[n];
+
+        while(aux != ant[aux]){
+            p.push(aux);
+            aux = ant[aux];
+        }
+        p.push(1);
+        
+        cout << p.size() << endl;
+    
+        while (!p.empty()){
+            cout << p.top() << " ";
+            p.pop();
+        }  
+        cout << endl;
+    }   
 
     return 0;
 }
