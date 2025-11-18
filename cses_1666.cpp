@@ -26,8 +26,8 @@ void bfs(int n){
 
             for(auto v: grafo[atual]){
                 if(!visitados[v]){
-                visitados[v] = 1;
-                q.push(v);
+                    visitados[v] = 1;
+                    q.push(v);
                 }
             }
         }
